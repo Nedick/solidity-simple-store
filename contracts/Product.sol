@@ -2,20 +2,20 @@
 pragma solidity ^0.8.1;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 
 error Product__NotOwnerOfContract();
-error Product__NotOwnerOfThisNft();
 
 contract Product is ERC1155 {
-    using Counters for Counters.Counter;
-    Counters.Counter private currentTokenId;
     // Variable that maintains owner address
     address private s_owner;
-    string tokenUri;
+    // Variable that maintains token URI
+    string private s_tokenUri;
+    // itemId -> true
+    mapping(uint256 => bool) private s_uniqueProducts;
+    uint256[] private s_productIds;
 
     constructor(string memory _uri) ERC1155(_uri) {
-        tokenUri = _uri;
+        s_tokenUri = _uri;
         s_owner = msg.sender;
     }
 
@@ -40,27 +40,38 @@ contract Product is ERC1155 {
 
     /**
      * @notice Method for adding product to the marketplace
-     * @param itemId - id of the product to add additional quantities to
      * @param amount - amount of tokens to add
-     * @dev If existing item id is provided then the quantity of the product is updated by the amount supplied
+     * @param itemId - id of the product to add additional quantities to (can start from 0)
+     * @dev If existing itemId is provided the amount will be added to the total quantity
      */
-    function mint(uint256 itemId, uint256 amount) public onlyOwner {
+    function addProduct(uint256 itemId, uint256 amount) public onlyOwner {
         bytes memory data;
+        if (!s_uniqueProducts[itemId]) {
+            s_uniqueProducts[itemId] = true;
+            s_productIds.push(itemId);
+        }
         _mint(msg.sender, itemId, amount, data);
     }
 
     /**
      * @notice Method for burning returned products
-     * @param account - the account to burn the tokens from
      * @param tokenId - Id of the token
-     * @dev Param amount is commented out because it is not used in the current implementation
-     * @dev Token amount is hardcoded to 1 because clients can hold only 1 of each product
+     * @dev - param account is commented because the caller of the burn method will provide address
+     * @dev - param amount is commented because there is a fixed amount for hold
+     * @dev token amountToBurn is hardcoded to 1 because clients can hold only 1 of each product
      * @dev Call parent contract burn method directly with super.
      */
     function burn(
-        address account,
-        uint256 tokenId /* uint256 amount */
-    ) public {
-        super._burn(account, tokenId, 1);
+        /* address account */
+        uint256 tokenId
+    ) public /* uint256 amount */
+    {
+        super._burn(msg.sender, tokenId, 1);
+        // mint new amount of the burned token (token was returned)
+        //super._mint()
+    }
+
+    function getUniqueProductsIds() public view returns (uint256[] memory) {
+        return s_productIds;
     }
 }
