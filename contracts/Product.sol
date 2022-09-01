@@ -54,23 +54,9 @@ contract Product is ERC1155 {
     }
 
     /**
-     * @notice Method for burning returned products
-     * @param tokenId - Id of the token
-     * @dev - param account is commented because the caller of the burn method will provide address
-     * @dev - param amount is commented because there is a fixed amount for hold
-     * @dev token amountToBurn is hardcoded to 1 because clients can hold only 1 of each product
-     * @dev Call parent contract burn method directly with super.
+     * @notice Method for retrieving Id's of all products
+     * @return uint256 array
      */
-    function burn(
-        /* address account */
-        uint256 tokenId
-    ) public /* uint256 amount */
-    {
-        super._burn(msg.sender, tokenId, 1);
-        // mint new amount of the burned token (token was returned)
-        //super._mint()
-    }
-
     function getUniqueProductsIds() public view returns (uint256[] memory) {
         return s_productIds;
     }
