@@ -7,19 +7,28 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
     const { deployer } = await getNamedAccounts()
 
     log("------------------------------")
-    const args = ["some://random.uri"]
+    const productArgs = ["some://random.uri"]
     const product = await deploy("Product", {
         from: deployer,
-        args: args,
+        args: productArgs,
+        log: true,
+        waitConfirmations: network.config.blockConfirmations || 1,
+    })
+
+    const simpleStoreArgs = [product.address]
+    const simpleStore = await deploy("SimpleStore", {
+        from: deployer,
+        args: simpleStoreArgs,
         log: true,
         waitConfirmations: network.config.blockConfirmations || 1,
     })
 
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
-        log("Verifying contract...")
+        log("Verifying contracts...")
         await verify(product.address, args)
+        await verify(simpleStore.address, args)
     }
     log("------------------------------")
 }
 
-module.exports.tags = ["all", "product", "main"]
+module.exports.tags = ["all"]
