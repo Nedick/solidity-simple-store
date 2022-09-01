@@ -25,8 +25,8 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
 
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
         log("Verifying contracts...")
-        await verify(product.address, args)
-        await verify(simpleStore.address, args)
+        await verify(product.address, productArgs)
+        await verify(simpleStore.address, simpleStoreArgs)
     }
     log("------------------------------")
 }
