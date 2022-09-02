@@ -70,8 +70,7 @@ contract SimpleStore is ReentrancyGuard {
             productsPerOrder,
             data
         );
-        // Give aproval to the new owner to allow return of product if needed
-        IERC1155(s_productAddress).setApprovalForAll(msg.sender, true);
+
         // Update product ownership
         s_productOwners[productId].ownerAndBlockOfPurchase[msg.sender] = block.number;
         s_productOwners[productId].ownerAddresses.push(msg.sender);
