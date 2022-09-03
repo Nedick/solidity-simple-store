@@ -31,13 +31,13 @@ contract SimpleStore is ReentrancyGuard {
     mapping(uint256 => Owners) private s_productOwners;
 
     // Variable that maintains the maximum products per order
-    uint256 private productsPerOrder = 1;
+    uint256 private constant productsPerOrder = 1;
     // Variable that maintains owner address
-    address private s_owner;
+    address private immutable s_owner;
     // Variable that maintains product contract address
     address private s_productAddress;
     // Variable that maintains the product price
-    uint256 private s_productPrice = 10000000000000000; // 0.01 ether per product
+    uint256 private constant s_productPrice = 10000000000000000; // 0.01 ether per product
 
     // Sets the original owner of the shop and product contract when it is deployed.
     constructor(address productAddress) {

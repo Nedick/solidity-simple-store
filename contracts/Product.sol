@@ -7,7 +7,7 @@ error Product__NotOwnerOfContract();
 
 contract Product is ERC1155 {
     // Variable that maintains owner address
-    address private s_owner;
+    address private immutable s_owner;
     // Variable that maintains token URI
     string private s_tokenUri;
     // itemId -> true
