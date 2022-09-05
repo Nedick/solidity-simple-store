@@ -87,8 +87,8 @@ yarn lint:fix
 ```
 
 # TODO:
+- [ ] Add unit tests for contracts
 - [ ] Add scripts for contract interaction on local or test network
-- [ ] Add tests for all files
 - [ ] Refactor the code to reduce gas costs and clean up the bugs
 - [ ] Find out how to use Multicall contract in the context of the task
 - [ ] Deploy contracts on actual test network like Rinkeby
