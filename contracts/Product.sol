@@ -7,6 +7,7 @@ error Product__NotOwnerOfContract();
 
 contract Product is ERC1155 {
     event ItemUpdate(uint256 indexed productId, uint256 indexed productQty);
+    event GrantedAccessToProducts(address indexed simpleStoreContractAddress, bool success);
 
     // Variable that maintains owner address
     address private immutable s_owner;
@@ -55,6 +56,17 @@ contract Product is ERC1155 {
         _mint(msg.sender, itemId, amount, data);
 
         emit ItemUpdate(itemId, amount);
+    }
+
+    /**
+     * @notice Method for allowing SimpleStore contract to access products
+     * @param simpleStoreContractAddress - address of the deployed SimpleStore contract
+     * @dev setApprovalForAll can be used via interface
+     */
+    function grantAccessToSimpleStoreContract(address simpleStoreContractAddress) public onlyOwner {
+        setApprovalForAll(simpleStoreContractAddress, true);
+
+        emit GrantedAccessToProducts(simpleStoreContractAddress, true);
     }
 
     /**
