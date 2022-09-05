@@ -6,7 +6,7 @@ const { developmentChains } = require("../../helper-hardhat-config")
     ? describe.skip
     : describe("Product Unit Tests", function () {
           const PRODUCT_ID = 1
-          const PRODUCT_AMOUNT = 11
+          const PRODUCT_QUANTITY = 11
 
           beforeEach(async () => {
               accounts = await ethers.getSigners() // could also do with getNamedAccounts
@@ -19,11 +19,13 @@ const { developmentChains } = require("../../helper-hardhat-config")
 
           describe("addProduct", function () {
               it("Emits an event after adding or updating a product", async function () {
-                  expect(await product.addProduct(PRODUCT_ID, PRODUCT_AMOUNT)).to.emit("ItemUpdate")
+                  expect(await product.addProduct(PRODUCT_ID, PRODUCT_QUANTITY)).to.emit(
+                      "ItemUpdate"
+                  )
               })
               it("Allows only the owner to add or update a product", async function () {
                   product = productContract.connect(user)
-                  await expect(product.addProduct(PRODUCT_ID, PRODUCT_AMOUNT)).to.be.revertedWith(
+                  await expect(product.addProduct(PRODUCT_ID, PRODUCT_QUANTITY)).to.be.revertedWith(
                       "NotOwnerOfContract"
                   )
               })
