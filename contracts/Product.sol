@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.1;
+pragma solidity ^0.8.7;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 
 error Product__NotOwnerOfContract();
 
 contract Product is ERC1155 {
+    event ItemUpdate(uint256 indexed productId, uint256 indexed productQty);
+
     // Variable that maintains owner address
     address private immutable s_owner;
     // Variable that maintains token URI
@@ -51,6 +53,8 @@ contract Product is ERC1155 {
             s_productIds.push(itemId);
         }
         _mint(msg.sender, itemId, amount, data);
+
+        emit ItemUpdate(itemId, amount);
     }
 
     /**

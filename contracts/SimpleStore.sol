@@ -27,6 +27,20 @@ contract SimpleStore is ReentrancyGuard {
         uint256 numberOfOwners;
     }
 
+    event ItemBought(
+        address indexed owner,
+        address indexed buyer,
+        uint256 indexed productId,
+        uint256 productQty
+    );
+
+    event ItemReturned(
+        address indexed owner,
+        address indexed buyer,
+        uint256 indexed productId,
+        uint256 productQty
+    );
+
     // ProductId -> Owners
     mapping(uint256 => Owners) private s_productOwners;
 
@@ -75,6 +89,8 @@ contract SimpleStore is ReentrancyGuard {
         s_productOwners[productId].ownerAndBlockOfPurchase[msg.sender] = block.number;
         s_productOwners[productId].ownerAddresses.push(msg.sender);
         s_productOwners[productId].numberOfOwners += 1;
+
+        emit ItemBought(s_owner, msg.sender, productId, productsPerOrder);
     }
 
     /**
@@ -97,6 +113,8 @@ contract SimpleStore is ReentrancyGuard {
             productsPerOrder,
             data
         );
+
+        emit ItemReturned(msg.sender, s_owner, productId, productsPerOrder);
     }
 
     /**
