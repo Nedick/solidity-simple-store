@@ -53,4 +53,29 @@ const { developmentChains } = require("../../helper-hardhat-config")
                   expect(await simpleStore.buyProduct(PRODUCT_ID, { value: PRICE })).to.emit(event)
               })
           })
+
+          describe("showOwners", function () {
+              it("Check if owners are added correctly", async function () {
+                  await simpleStore.buyProduct(PRODUCT_ID, { value: PRICE })
+                  user2 = accounts[2]
+                  await simpleStoreContract.connect(user2).buyProduct(PRODUCT_ID, { value: PRICE })
+                  owners = await simpleStore.showOwners(PRODUCT_ID)
+                  assert(owners[0] == user.address)
+                  assert(owners[1] == user2.address)
+              })
+          })
+
+          describe("showProducts", function () {
+              it("Check if products are added correctly", async function () {
+                  const PRODUCT_TWO_ID = 11
+                  const PRODUCT_THREE_ID = 8
+                  await product.addProduct(PRODUCT_ID, PRODUCT_QUANTITY)
+                  await product.addProduct(PRODUCT_TWO_ID, PRODUCT_QUANTITY)
+                  await product.addProduct(PRODUCT_THREE_ID, PRODUCT_QUANTITY)
+                  result = await simpleStore.showProducts()
+                  assert(result[0] == PRODUCT_ID)
+                  assert(result[1] == PRODUCT_TWO_ID)
+                  assert(result[2] == PRODUCT_THREE_ID)
+              })
+          })
       })
