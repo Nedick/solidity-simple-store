@@ -1,4 +1,4 @@
-const { expect } = require("chai")
+const { assert, expect } = require("chai")
 const { network, deployments, ethers } = require("hardhat")
 const { developmentChains } = require("../../helper-hardhat-config")
 
@@ -30,10 +30,24 @@ const { developmentChains } = require("../../helper-hardhat-config")
                       "NotOwnerOfContract"
                   )
               })
+          })
+
+          describe("grantAccessToSimpleStoreContract", function () {
               it("Grants access for SimpleStore contract", async function () {
                   expect(
                       await product.grantAccessToSimpleStoreContract(simpleStoreContract.address)
                   ).to.emit("GrantedAccessToProducts")
+              })
+          })
+
+          describe("getUniqueProductsIds", function () {
+              it("Check if added product id's are unique ", async function () {
+                  // add 2 times product with same id
+                  await product.addProduct(PRODUCT_ID, PRODUCT_QUANTITY)
+                  await product.addProduct(PRODUCT_ID, PRODUCT_QUANTITY)
+                  productIds = await product.getUniqueProductsIds()
+                  console.log(productIds.toString())
+                  assert(productIds.toString() == 1)
               })
           })
       })
