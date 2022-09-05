@@ -78,7 +78,7 @@ contract SimpleStore is ReentrancyGuard {
     }
 
     /**
-     * @notice Method for displaying all owners of
+     * @notice Method for returning purchased product if 100 blocks are not passed
      * @param productId - Id of the token for return
      */
     function returnProduct(uint256 productId) public {
