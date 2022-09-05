@@ -87,8 +87,9 @@ yarn lint:fix
 ```
 
 # TODO:
-- [ ] Refactor the code to reduce gas costs and clean up the bugs
+- [ ] Add scripts for contract interaction on local or test network
 - [ ] Add tests for all files
+- [ ] Refactor the code to reduce gas costs and clean up the bugs
 - [ ] Find out how to use Multicall contract in the context of the task
 - [ ] Deploy contracts on actual test network like Rinkeby
 - [ ] Add user friendly front-end using ethers.js and next.js ?
