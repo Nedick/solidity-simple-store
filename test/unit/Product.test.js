@@ -15,6 +15,7 @@ const { developmentChains } = require("../../helper-hardhat-config")
               await deployments.fixture(["all"])
               productContract = await ethers.getContract("Product")
               product = productContract.connect(owner)
+              simpleStoreContract = await ethers.getContract("SimpleStore")
           })
 
           describe("addProduct", function () {
@@ -28,6 +29,11 @@ const { developmentChains } = require("../../helper-hardhat-config")
                   await expect(product.addProduct(PRODUCT_ID, PRODUCT_QUANTITY)).to.be.revertedWith(
                       "NotOwnerOfContract"
                   )
+              })
+              it("Grants access for SimpleStore contract", async function () {
+                  expect(
+                      await product.grantAccessToSimpleStoreContract(simpleStoreContract.address)
+                  ).to.emit("GrantedAccessToProducts")
               })
           })
       })
