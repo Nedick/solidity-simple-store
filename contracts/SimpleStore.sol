@@ -69,7 +69,7 @@ contract SimpleStore is ReentrancyGuard {
             revert SimpleStore__PriceTooLow();
         }
 
-        // If there is block number clien has already purchased this item
+        // If there is block number client has already purchased this item
         if (s_productOwners[productId].ownerAndBlockOfPurchase[msg.sender] != 0) {
             revert SimpleStore__AlreadyBoughtThatItem();
         }
