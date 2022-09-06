@@ -98,8 +98,11 @@ contract SimpleStore is ReentrancyGuard {
      * @param productId - Id of the token for return
      */
     function returnProduct(uint256 productId) public {
+        uint256 retrunProductDeadline = s_productOwners[productId].ownerAndBlockOfPurchase[
+            msg.sender
+        ] + 100;
         // revert if 100 blocks have passed since purchase
-        if ((s_productOwners[productId].ownerAndBlockOfPurchase[msg.sender] + 100) < block.number) {
+        if (retrunProductDeadline < block.number) {
             revert SimpleStore__NotAvailableForReturn();
         }
 
