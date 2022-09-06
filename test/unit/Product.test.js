@@ -41,12 +41,11 @@ const { developmentChains } = require("../../helper-hardhat-config")
           })
 
           describe("getUniqueProductsIds", function () {
-              it("Check if added product id's are unique ", async function () {
+              it("Check if added product id's are unique", async function () {
                   // add 2 times product with same id
                   await product.addProduct(PRODUCT_ID, PRODUCT_QUANTITY)
                   await product.addProduct(PRODUCT_ID, PRODUCT_QUANTITY)
                   productIds = await product.getUniqueProductsIds()
-                  console.log(productIds.toString())
                   assert(productIds.toString() == 1)
               })
           })
