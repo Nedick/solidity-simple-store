@@ -25,7 +25,7 @@ yarn
 
 # Useage
 
-Deploy:
+### Deploy
 
 ```
 yarn hardhat deploy
@@ -35,6 +35,22 @@ yarn hardhat deploy
 
 ```
 yarn hardhat coverage
+```
+
+### Testing
+```
+yarn hardhat test
+```
+
+### Linting
+
+To check linting / code formatting:
+```
+yarn lint
+```
+or, to fix: 
+```
+yarn lint:fix
 ```
 
 # Deployment to a testnet or mainnet
@@ -73,22 +89,6 @@ However, you can manual verify with:
 
 ```
 yarn hardhat verify --constructor-args arguments.ts DEPLOYED_CONTRACT_ADDRESS
-```
-
-# Linting
-
-To check linting / code formatting:
-```
-yarn lint
-```
-or, to fix: 
-```
-yarn lint:fix
-```
-
-# Testing
-```
-yarn hardhat test
 ```
 
 # TODO:
