@@ -11,8 +11,8 @@ Develop simple store:
 
 ## Requirements
 
-- [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- [Nodejs](https://nodejs.org/en/)
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [Node.js](https://nodejs.org/en/)
 - [Yarn](https://yarnpkg.com/getting-started/install) instead of `npm`
 
 ## Quickstart
@@ -23,7 +23,7 @@ cd solidity-simple-store
 yarn
 ```
 
-# Useage
+# Usage
 
 ### Deploy
 
